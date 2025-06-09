@@ -1,8 +1,14 @@
 const catchError = require('../utils/catchError');
 const ServidorPolicial = require('../models/ServidorPolicial');
+const Novedad = require('../models/Novedad');
+
 
 const getAll = catchError(async(req, res) => {
-    const results = await ServidorPolicial.findAll();
+    const results = await ServidorPolicial.findAll({
+        include: [
+            Novedad
+        ]
+    });
     return res.json(results);
 });
 
