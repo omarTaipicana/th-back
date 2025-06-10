@@ -13,6 +13,10 @@ const ServidorPolicial = sequelize.define("servidorPolicial", {
     allowNull: false,
     unique: true,
   },
+  grado: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   nombres: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -90,7 +94,15 @@ const ServidorPolicial = sequelize.define("servidorPolicial", {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  grupoAdmin: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   departamento: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  seccion: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -118,7 +130,7 @@ const ServidorPolicial = sequelize.define("servidorPolicial", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  enLaDirección: {
+  enLaDireccion: {
     type: DataTypes.STRING,
     allowNull: false,
   },

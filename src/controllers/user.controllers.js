@@ -95,8 +95,9 @@ const getOne = catchError(async (req, res) => {
 
 const remove = catchError(async (req, res) => {
   const { id } = req.params;
+  const result = await User.findByPk(id);
   await User.destroy({ where: { id } });
-  return res.sendStatus(204);
+  return res.json(result).sendStatus(204);
 });
 
 const update = catchError(async (req, res) => {
@@ -190,10 +191,10 @@ const sendEmailResetPassword = catchError(async (req, res) => {
     code: code,
     userId: user.id,
   });
-await sendEmail({
-  to: email,
-  subject: "Restablecer su contraseña – APP TH-DIGIN",
-  html: `
+  await sendEmail({
+    to: email,
+    subject: "Restablecer su contraseña – APP TH-DIGIN",
+    html: `
   <div style="font-family: Arial, sans-serif; background-color: #f4f6f8; padding: 20px;">
     <div style="max-width: 600px; margin: auto; background-color: white; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); overflow: hidden;">
       
@@ -221,8 +222,7 @@ await sendEmail({
     </div>
   </div>
   `,
-});
-
+  });
 
   return res.json(user);
 });
