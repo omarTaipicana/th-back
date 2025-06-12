@@ -16,6 +16,11 @@ const Formacion = sequelize.define("formacion", {
     type: DataTypes.TIME,
     allowNull: false,
   },
+  isAvailable: {
+    type: DataTypes.BOOLEAN,
+    allowNull: true,
+    defaultValue: true,
+  },
   usuarioRegistro: {
     type: DataTypes.STRING,
     allowNull: false,

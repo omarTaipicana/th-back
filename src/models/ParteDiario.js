@@ -14,8 +14,11 @@ const ParteDiario = sequelize.define("parteDiario", {
   },
   detalle: {
     type: DataTypes.STRING,
+    allowNull: true,
+  },
+  seccion: {
+    type: DataTypes.STRING,
     allowNull: false,
-    unique: true,
   },
   usuarioRegistro: {
     type: DataTypes.STRING,
