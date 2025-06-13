@@ -36,6 +36,10 @@ const Novedad = sequelize.define("novedad", {
     type: DataTypes.DATEONLY,
     allowNull: true,
   },
+  seccion: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   usuarioRegistro: {
     type: DataTypes.STRING,
     allowNull: false,
