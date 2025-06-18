@@ -12,9 +12,14 @@ const PartePdf = sequelize.define("partePdf", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  generado: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  },
   pdf: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
   usuarioRegistro: {
     type: DataTypes.STRING,
