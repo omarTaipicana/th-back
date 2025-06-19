@@ -15,6 +15,7 @@ const create = catchError(async (req, res) => {
     cI,
     email,
     password,
+    grado,
     firstName,
     lastName,
     cellular,
@@ -31,6 +32,7 @@ const create = catchError(async (req, res) => {
     cI,
     email,
     password: bcryptPassword,
+    grado,
     firstName,
     lastName,
     cellular,
@@ -105,6 +107,7 @@ const update = catchError(async (req, res) => {
     cI,
     email,
     password,
+    grado,
     firstName,
     lastName,
     cellular,
@@ -118,6 +121,7 @@ const update = catchError(async (req, res) => {
   const result = await User.update(
     {
       cI,
+      grado,
       firstName,
       lastName,
       cellular,

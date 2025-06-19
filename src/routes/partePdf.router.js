@@ -1,5 +1,7 @@
 const { getAll, create, getOne, remove, update } = require('../controllers/partePdf.controllers');
 const express = require('express');
+const upload = require("../utils/multer")
+
 
 const partePdfRouter = express.Router();
 
@@ -10,6 +12,6 @@ partePdfRouter.route('/parte_pdf')
 partePdfRouter.route('/parte_pdf/:id')
     .get(getOne)
     .delete(remove)
-    .put(update);
+    .put(upload.upload.single("pdf"), upload.generateFileUrl, update);
 
 module.exports = partePdfRouter;

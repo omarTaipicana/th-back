@@ -22,6 +22,10 @@ const User = sequelize.define("user", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  grado: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   firstName: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -38,7 +42,7 @@ const User = sequelize.define("user", {
     type: DataTypes.DATEONLY,
     allowNull: false,
   },
-   departamento: {
+  departamento: {
     type: DataTypes.STRING,
     allowNull: false,
   },
