@@ -20,7 +20,7 @@ app.use(helmet({
 app.use(cors());
 
 // Servir la carpeta 'uploads' de forma pública
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(path.join(__dirname, "..", "uploads")));
 
 app.use(router);
 app.get('/', (req, res) => {
