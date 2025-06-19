@@ -19,8 +19,6 @@ app.use(helmet({
 }));
 app.use(cors());
 
-const path = require('path');
-
 // Servir la carpeta 'uploads' de forma pública
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
