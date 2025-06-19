@@ -61,7 +61,7 @@ const app = express();
 // Ruta estática para archivos
 app.use(
   "/uploads",
-  express.static(path.join(__dirname, "..", "..", "uploads", "parte_diario"))
+  express.static(path.join(__dirname, "..", "..", "uploads"))
 );
 
 module.exports = { upload, generateFileUrl };
