@@ -18,7 +18,18 @@ const upload = multer({
       cb(null, uploadPath); // Configura la carpeta de destino
     },
     filename: (req, file, cb) => {
-      cb(null, file.originalname); // Guarda el archivo con su nombre original
+      const timestamp = new Date()
+        .toISOString()
+        .replace(/[-:.]/g, "") // Quita caracteres conflictivos
+        .slice(0, 15); // YYYYMMDDTHHMMSS
+
+      const ext = path.extname(file.originalname); // .pdf, .png, etc.
+      const baseName = path
+        .basename(file.originalname, ext)
+        .replace(/\s+/g, "_"); // quita espacios
+
+      const uniqueName = `${baseName}_${timestamp}${ext}`;
+      cb(null, uniqueName);
     },
   }),
   limits: {
@@ -44,13 +55,9 @@ const upload = multer({
 // Middleware para generar la URL del archivo
 const generateFileUrl = (req, res, next) => {
   if (req.file) {
-    const host = `${req.protocol}://${req.get("host")}`; // Obtiene el host del servidor
-    const filePath = path.join(
-      "uploads",
-      "parte_diario",
-      req.file.originalname
-    );
-    req.fileUrl = `${host}/${filePath.replace(/\\/g, "/")}`; // Genera la URL
+    const host = `${req.protocol}://${req.get("host")}`; // Ej: http://localhost:8080
+    const filePath = path.join("uploads", "parte_diario", req.file.filename); // Usa el nombre real guardado
+    req.fileUrl = `${host}/${filePath.replace(/\\/g, "/")}`; // Normaliza las barras
   }
   next();
 };
