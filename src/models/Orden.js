@@ -1,48 +1,41 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../utils/connection");
 
-const Novedad = sequelize.define("novedad", {
+const Orden = sequelize.define("orden", {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
     allowNull: false,
   },
-  novedad: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  descripcion: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  tipoDocumento: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  numDocumento: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  fechaDocumento: {
+  fecha: {
     type: DataTypes.DATEONLY,
     allowNull: false,
   },
-  fechaInicio: {
-    type: DataTypes.DATEONLY,
-    allowNull: false,
-  },
-  fechaFin: {
-    type: DataTypes.DATEONLY,
+  register: {
+    type: DataTypes.BOOLEAN,
     allowNull: true,
+    defaultValue: false,
   },
-  seccion: {
+  numOrden: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  contraseña: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  santoSeña: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  urlDoc: {
+  frase: {
     type: DataTypes.STRING,
-    allowNull: true,
+    allowNull: false,
+  },
+  jefeControl: {
+    type: DataTypes.STRING,
+    allowNull: false,
   },
   usuarioRegistro: {
     type: DataTypes.STRING,
@@ -54,4 +47,4 @@ const Novedad = sequelize.define("novedad", {
   },
 });
 
-module.exports = Novedad;
+module.exports = Orden;

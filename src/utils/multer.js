@@ -4,18 +4,69 @@ const fs = require("fs");
 const express = require("express");
 
 // Define la ruta fuera de la carpeta raíz del proyecto
-const uploadPath = path.join(__dirname, "..", "..", "uploads", "parte_diario");
+const uploadPathPd = path.join(
+  __dirname,
+  "..",
+  "..",
+  "uploads",
+  "parte_diario"
+);
+const uploadPathN = path.join(__dirname, "..", "..", "uploads", "novedades");
 
 // Crea la carpeta si no existe
-if (!fs.existsSync(uploadPath)) {
-  fs.mkdirSync(uploadPath, { recursive: true });
+if (!fs.existsSync(uploadPathPd)) {
+  fs.mkdirSync(uploadPathPd, { recursive: true });
+}
+
+if (!fs.existsSync(uploadPathN)) {
+  fs.mkdirSync(uploadPathN, { recursive: true });
 }
 
 // Configuración de Multer
-const upload = multer({
+const uploadPd = multer({
   storage: multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, uploadPath); // Configura la carpeta de destino
+      cb(null, uploadPathPd); // Configura la carpeta de destino
+    },
+    filename: (req, file, cb) => {
+      const timestamp = new Date()
+        .toISOString()
+        .replace(/[-:.]/g, "") // Quita caracteres conflictivos
+        .slice(0, 15); // YYYYMMDDTHHMMSS
+
+      const ext = path.extname(file.originalname); // .pdf, .png, etc.
+      const baseName = path
+        .basename(file.originalname, ext)
+        .replace(/\s+/g, "_"); // quita espacios
+
+      const uniqueName = `${baseName}_${timestamp}${ext}`;
+      cb(null, uniqueName);
+    },
+  }),
+  limits: {
+    fileSize: 10 * 1024 * 1024, // Tamaño máximo de archivo: 10 MB
+  },
+  fileFilter: (req, file, cb) => {
+    // Valida el tipo de archivo permitido
+    const allowedMimeTypes = [
+      "application/pdf",
+      "image/jpeg",
+      "image/png",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xlsx
+      "application/vnd.ms-excel", // .xls
+    ];
+    if (allowedMimeTypes.includes(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(new Error("Solo se permiten archivos PDF, JPEG o PNG"));
+    }
+  },
+});
+
+const uploadN = multer({
+  storage: multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, uploadPathN); // Configura la carpeta de destino
     },
     filename: (req, file, cb) => {
       const timestamp = new Date()
@@ -53,10 +104,19 @@ const upload = multer({
 });
 
 // Middleware para generar la URL del archivo
-const generateFileUrl = (req, res, next) => {
+const generateFileUrlPd = (req, res, next) => {
   if (req.file) {
     const host = `${req.protocol}://${req.get("host")}`; // Ej: http://localhost:8080
     const filePath = path.join("uploads", "parte_diario", req.file.filename); // Usa el nombre real guardado
+    req.fileUrl = `${host}/${filePath.replace(/\\/g, "/")}`; // Normaliza las barras
+  }
+  next();
+};
+
+const generateFileUrlN = (req, res, next) => {
+  if (req.file) {
+    const host = `${req.protocol}://${req.get("host")}`; // Ej: http://localhost:8080
+    const filePath = path.join("uploads", "novedades", req.file.filename); // Usa el nombre real guardado
     req.fileUrl = `${host}/${filePath.replace(/\\/g, "/")}`; // Normaliza las barras
   }
   next();
@@ -71,4 +131,4 @@ app.use(
   express.static(path.join(__dirname, "..", "..", "uploads"))
 );
 
-module.exports = { upload, generateFileUrl };
+module.exports = { uploadPd, generateFileUrlPd, uploadN, generateFileUrlN };

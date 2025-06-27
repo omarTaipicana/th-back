@@ -12,6 +12,6 @@ partePdfRouter.route('/parte_pdf')
 partePdfRouter.route('/parte_pdf/:id')
     .get(getOne)
     .delete(remove)
-    .put(upload.upload.single("pdf"), upload.generateFileUrl, update);
+    .put(upload.uploadPd.single("file"), upload.generateFileUrlPd, update);
 
 module.exports = partePdfRouter;
