@@ -21,11 +21,11 @@ const Orden = sequelize.define("orden", {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  contraseña: {
+  contrasena: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  santoSeña: {
+  santoSena: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -36,6 +36,10 @@ const Orden = sequelize.define("orden", {
   jefeControl: {
     type: DataTypes.STRING,
     allowNull: false,
+  },
+  urlOrden: {
+    type: DataTypes.STRING,
+    allowNull: true,
   },
   usuarioRegistro: {
     type: DataTypes.STRING,
