@@ -17,6 +17,8 @@ const create = catchError(async (req, res) => {
     fechaDocumento,
     fechaInicio,
     fechaFin,
+    horaInicio,
+    horaFin,
     seccion,
     servidorPolicialId,
     usuarioRegistro,
@@ -33,6 +35,8 @@ const create = catchError(async (req, res) => {
     fechaDocumento,
     fechaInicio,
     fechaFin,
+    horaInicio,
+    horaFin,
     seccion,
     urlDoc: url,
     servidorPolicialId,
@@ -89,6 +93,8 @@ const update = catchError(async (req, res) => {
     fechaDocumento,
     fechaInicio,
     fechaFin,
+    horaInicio,
+    horaFin,
     usuarioEdicion,
   } = req.body;
 
@@ -131,6 +137,8 @@ const update = catchError(async (req, res) => {
       fechaDocumento,
       fechaInicio,
       fechaFin,
+      horaInicio,
+      horaFin,
       usuarioEdicion,
       urlDoc: url || existingRecord.urlDoc, // Actualiza solo si hay un nuevo archivo
     },

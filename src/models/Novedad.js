@@ -36,6 +36,15 @@ const Novedad = sequelize.define("novedad", {
     type: DataTypes.DATEONLY,
     allowNull: true,
   },
+  horaInicio: {
+    type: DataTypes.TIME,
+    allowNull: true,
+  },
+  horaFin: {
+    type: DataTypes.TIME,
+    allowNull: true,
+  },
+
   seccion: {
     type: DataTypes.STRING,
     allowNull: false,
