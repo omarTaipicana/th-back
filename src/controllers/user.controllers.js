@@ -150,7 +150,7 @@ const login = catchError(async (req, res) => {
       .json({ message: "El usuario no ha verificado su correo electrónico" });
 
   const token = jwt.sign({ user }, process.env.TOKEN_SECRET, {
-    expiresIn: "30m",
+    expiresIn: "120m",
   });
 
   return res.json({ token });
