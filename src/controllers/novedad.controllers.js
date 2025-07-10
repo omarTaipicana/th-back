@@ -84,7 +84,7 @@ const remove = catchError(async (req, res) => {
 
 const update = catchError(async (req, res) => {
   const { id } = req.params;
-  const url = req.fileUrl; // URL del nuevo archivo cargado
+  const url = req.fileUrl;
   const {
     novedad,
     descripcion,

@@ -130,6 +130,18 @@ const ServidorPolicial = sequelize.define("servidorPolicial", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  fechaInicio: {
+    type: DataTypes.DATEONLY,
+    allowNull: false,
+  },
+  fechaFin: {
+    type: DataTypes.DATEONLY,
+    allowNull: true,
+  },
+  url: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   enLaDireccion: {
     type: DataTypes.STRING,
     allowNull: false,
