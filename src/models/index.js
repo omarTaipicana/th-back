@@ -27,10 +27,6 @@ Formacion.hasMany(PartePdf);
 Orden.belongsTo(Formacion);
 Formacion.hasMany(Orden);
 
-Comunicado.belongsTo(Orden);
-Orden.hasMany(Comunicado);
-
-
 
 
 ServidorPolicial.belongsToMany(Orden, {

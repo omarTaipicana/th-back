@@ -12,6 +12,14 @@ const Comunicado = sequelize.define("comunicado", {
     type: DataTypes.TEXT,
     allowNull: false,
   },
+  fechaInicio: {
+    type: DataTypes.DATEONLY,
+    allowNull: false,
+  },
+  fechaFin: {
+    type: DataTypes.DATEONLY,
+    allowNull: false,
+  },
   usuarioRegistro: {
     type: DataTypes.STRING,
     allowNull: false,
