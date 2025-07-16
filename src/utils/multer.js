@@ -14,6 +14,8 @@ const uploadPathPd = path.join(
 const uploadPathN = path.join(__dirname, "..", "..", "uploads", "novedades");
 const uploadPathO = path.join(__dirname, "..", "..", "uploads", "ordenes");
 const uploadPathSp = path.join(__dirname, "..", "..", "uploads", "serv_poli");
+const uploadPathCom = path.join(__dirname, "..", "..", "uploads", "comunicados");
+
 
 // Crea la carpeta si no existe
 if (!fs.existsSync(uploadPathPd)) {
@@ -30,6 +32,10 @@ if (!fs.existsSync(uploadPathO)) {
 
 if (!fs.existsSync(uploadPathSp)) {
   fs.mkdirSync(uploadPathSp, { recursive: true });
+}
+
+if (!fs.existsSync(uploadPathCom)) {
+  fs.mkdirSync(uploadPathCom, { recursive: true });
 }
 
 // Configuración de Multer
@@ -193,6 +199,46 @@ const uploadSp = multer({
   },
 });
 
+const uploadCom = multer({
+  storage: multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, uploadPathCom); // Configura la carpeta de destino
+    },
+    filename: (req, file, cb) => {
+      const timestamp = new Date()
+        .toISOString()
+        .replace(/[-:.]/g, "") // Quita caracteres conflictivos
+        .slice(0, 15); // YYYYMMDDTHHMMSS
+
+      const ext = path.extname(file.originalname); // .pdf, .png, etc.
+      const baseName = path
+        .basename(file.originalname, ext)
+        .replace(/\s+/g, "_"); // quita espacios
+
+      const uniqueName = `${baseName}_${timestamp}${ext}`;
+      cb(null, uniqueName);
+    },
+  }),
+  limits: {
+    fileSize: 10 * 1024 * 1024, // Tamaño máximo de archivo: 10 MB
+  },
+  fileFilter: (req, file, cb) => {
+    // Valida el tipo de archivo permitido
+    const allowedMimeTypes = [
+      "application/pdf",
+      "image/jpeg",
+      "image/png",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xlsx
+      "application/vnd.ms-excel", // .xls
+    ];
+    if (allowedMimeTypes.includes(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(new Error("Solo se permiten archivos PDF, JPEG o PNG"));
+    }
+  },
+});
+
 // Middleware para generar la URL del archivo
 const generateFileUrlPd = (req, res, next) => {
   if (req.file) {
@@ -230,6 +276,15 @@ const generateFileUrlSp = (req, res, next) => {
   next();
 };
 
+const generateFileUrlCom = (req, res, next) => {
+  if (req.file) {
+    const host = `${req.protocol}://${req.get("host")}`; // Ej: http://localhost:8080
+    const filePath = path.join("uploads", "comunicados", req.file.filename); // Usa el nombre real guardado
+    req.fileUrl = `${host}/${filePath.replace(/\\/g, "/")}`; // Normaliza las barras
+  }
+  next();
+};
+
 // Configura la aplicación Express para servir la carpeta `uploads` de manera estática
 const app = express();
 
@@ -248,4 +303,6 @@ module.exports = {
   generateFileUrlO,
   uploadSp,
   generateFileUrlSp,
+  uploadCom,
+  generateFileUrlCom,
 };

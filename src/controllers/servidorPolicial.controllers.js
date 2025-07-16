@@ -16,7 +16,7 @@ const create = catchError(async (req, res) => {
 
   const result = await ServidorPolicial.create({
     ...req.body,
-    ur: url,
+    url: url,
   });
   return res.status(201).json(result);
 });

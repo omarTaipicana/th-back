@@ -20,6 +20,10 @@ const Comunicado = sequelize.define("comunicado", {
     type: DataTypes.DATEONLY,
     allowNull: false,
   },
+  urlFile: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   usuarioRegistro: {
     type: DataTypes.STRING,
     allowNull: false,
