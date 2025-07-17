@@ -69,7 +69,7 @@ const update = catchError(async (req, res) => {
       "..",
       "..",
       "uploads",
-      "serv_poli",
+      "comunicados",
       path.basename(existingRecord.urlFile)
     );
 
@@ -87,7 +87,7 @@ const update = catchError(async (req, res) => {
   const [updateCount, updatedRecords] = await Comunicado.update(
     {
       ...req.body,
-      url: url || existingRecord.url, // Mantén el valor anterior si no hay nuevo archivo
+      urlFile: url || existingRecord.url, // Mantén el valor anterior si no hay nuevo archivo
     },
     {
       where: { id },
